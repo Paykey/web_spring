@@ -1,11 +1,9 @@
 package com.example.web_spring;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelloController {
@@ -23,5 +21,12 @@ public class HelloController {
     public List<Post> getPostList()
     {
         return posts;
+    }
+
+    @PostMapping("/posts")
+    public String writePost(@RequestBody Post post)
+    {
+        posts.add(post);
+        return "저장 완료! 제목: " + post.getTitle();
     }
 }

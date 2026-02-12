@@ -1,0 +1,11 @@
+### 1. 게시글 쓰기 (POST 요청)
+POST http://localhost:8080/posts
+Content-Type: application/json
+
+{
+  "title": "POST로 보냄",
+  "content": "긴 글"
+}
+
+### 2. 게시글 목록 보기 (GET 요청)
+GET http://localhost:8080/list
