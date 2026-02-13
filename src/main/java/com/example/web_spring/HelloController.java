@@ -1,32 +1,31 @@
 package com.example.web_spring;
 
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.*;
-
 @RestController
-public class HelloController {
+public class HelloController
+{
+    private final PostRepository postRepository; // 창고 관리자 불러오기
 
-    private List<Post> posts = new ArrayList<>();
-
-    @GetMapping("/write")
-    public String writePost(@RequestParam("title") String title, @RequestParam("content") String content)
+    //  생성자
+    public HelloController(PostRepository postRepository)
     {
-        posts.add(new Post(title, content));
-        return "저장 완료! 현재 글 개수: " + posts.size();
+        this.postRepository = postRepository;
     }
 
-    @GetMapping("/list")
-    public List<Post> getPostList()
-    {
-        return posts;
-    }
-
+    // 게시물 작성 (DB에 저장)
     @PostMapping("/posts")
     public String writePost(@RequestBody Post post)
     {
-        posts.add(post);
-        return "저장 완료! 제목: " + post.getTitle();
+        postRepository.save(post);
+        return "DB에 저장합니다. 제목: " + post.getTitle();
+    }
+
+    //  게시물 목록 조회 (DB에서 가져옴)
+    @GetMapping("/list")
+    public List<Post> getPostList()
+    {
+        return postRepository.findAll();
     }
 }

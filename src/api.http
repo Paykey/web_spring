@@ -3,7 +3,7 @@ POST http://localhost:8080/posts
 Content-Type: application/json
 
 {
-  "title": "POST로 보냄",
+  "title": "테스트",
   "content": "긴 글"
 }
 
