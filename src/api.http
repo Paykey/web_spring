@@ -9,3 +9,15 @@ Content-Type: application/json
 
 ### 2. 게시글 목록 보기 (GET 요청)
 GET http://localhost:8080/list
+
+### 3. 글 수정하기 (PUT 요청)
+PUT http://localhost:8080/posts/1
+Content-Type: application/json
+
+{
+  "title": "제목 수정",
+  "content": "바뀐 내용!"
+}
+
+### 4. 글 삭제하기 (DELETE 요청)
+DELETE http://localhost:8080/posts/1
