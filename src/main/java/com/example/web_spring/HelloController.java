@@ -1,5 +1,6 @@
 package com.example.web_spring;
 
+import com.example.web_spring.dto.PostDto;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,9 +17,9 @@ public class HelloController
 
     // 게시물 작성 (DB에 저장)
     @PostMapping("/posts")
-    public String writePost(@RequestBody Post post)
+    public String writePost(@RequestBody PostDto postDto)
     {
-        Post savedPost = postService.writePost(post);
+        Post savedPost = postService.writePost(postDto);
         return "DB에 저장합니다. 제목: " + savedPost.getTitle();
     }
 

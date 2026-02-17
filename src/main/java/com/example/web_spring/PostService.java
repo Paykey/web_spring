@@ -1,5 +1,6 @@
 package com.example.web_spring;
 
+import com.example.web_spring.dto.PostDto;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -15,8 +16,11 @@ public class PostService
     }
 
     // 게시물 작성
-    public Post writePost(Post post)
+    public Post writePost(PostDto postDto)
     {
+        // DTO에서 내용물을 Entity로
+        Post post = postDto.toEntity();
+
         return postRepository.save(post);
     }
 
