@@ -6,51 +6,43 @@ import java.util.List;
 @RestController
 public class HelloController
 {
-    private final PostRepository postRepository; // 창고 관리자 불러오기
+    private final PostService postService;
 
     //  생성자
-    public HelloController(PostRepository postRepository)
+    public HelloController(PostService postService)
     {
-        this.postRepository = postRepository;
+        this.postService = postService;
     }
 
     // 게시물 작성 (DB에 저장)
     @PostMapping("/posts")
     public String writePost(@RequestBody Post post)
     {
-        postRepository.save(post);
-        return "DB에 저장합니다. 제목: " + post.getTitle();
+        Post savedPost = postService.writePost(post);
+        return "DB에 저장합니다. 제목: " + savedPost.getTitle();
     }
 
     //  게시물 목록 조회 (DB에서 가져옴)
     @GetMapping("/list")
     public List<Post> getPostList()
     {
-        return postRepository.findAll();
+        return postService.getPostList();
     }
 
     // 게시물 업데이트
     @PutMapping("/posts/{id}")
     public String updatePost(@PathVariable Long id, @RequestBody Post newPost)
     {
-        //  해당 id의 게시물이 없으면 에러 메시지
-        Post post = postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("E: 해당 ID의 글이 존재하지 않습니다."));
+        Post updatedPost = postService.updatePost(id, newPost);
 
-        //  게시물 업데이트
-        post.setTitle(newPost.getTitle());
-        post.setContent(newPost.getContent());
-
-        //  교체 후 다시 저장
-        postRepository.save(post);
-
-        return "게시물을 수정하였습니다. 바뀐 제목: " + post.getTitle();
+        return "게시물을 수정하였습니다. 바뀐 제목: " + updatedPost.getTitle();
     }
 
     //  게시물 삭제
     @DeleteMapping("/posts/{id}")
     public String deletePost(@PathVariable Long id)
     {
-        postRepository.deleteById(id);
+        postService.deletePost(id);
         return "ID: " + id + " 의 게시물이 삭제되었습니다.";
     }
 
