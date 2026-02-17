@@ -1,6 +1,7 @@
 package com.example.web_spring;
 
 import com.example.web_spring.dto.PostDto;
+import com.example.web_spring.dto.PostResponseDto;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -25,16 +26,16 @@ public class HelloController
 
     //  게시물 목록 조회 (DB에서 가져옴)
     @GetMapping("/list")
-    public List<Post> getPostList()
+    public List<PostResponseDto> getPostList()
     {
         return postService.getPostList();
     }
 
     // 게시물 업데이트
     @PutMapping("/posts/{id}")
-    public String updatePost(@PathVariable Long id, @RequestBody Post newPost)
+    public String updatePost(@PathVariable Long id, @RequestBody PostDto postDto)
     {
-        Post updatedPost = postService.updatePost(id, newPost);
+        Post updatedPost = postService.updatePost(id, postDto);
 
         return "게시물을 수정하였습니다. 바뀐 제목: " + updatedPost.getTitle();
     }
